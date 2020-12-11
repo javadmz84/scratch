@@ -6,3 +6,5 @@ def count():
     print(2)
     time.sleep(1)
     print(1)
+
+count()
