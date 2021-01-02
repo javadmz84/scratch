@@ -14,6 +14,5 @@ def make_soup(data):
 
 
 def get_tag(soup, name, cls):
-    tags = soup.find_all(name,  class_=cls)
+    tags = soup.find_all(name, class_=cls)
     return tags
-
