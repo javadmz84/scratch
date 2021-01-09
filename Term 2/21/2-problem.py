@@ -6,4 +6,10 @@ def get_info():
 info = get_info()
 
 template = f"""Name: {info[0]}
-last: 
+Name: {info[0].title()}
+Last : {info[1].upper()}
+Age : {info[2]}
+********************
+file = open('names.txt', 'a')
+file.write(template)
+file.close()
