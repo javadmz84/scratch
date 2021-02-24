@@ -1,9 +1,9 @@
-from tkinter import *
+import tkinter as tk
 
-root = Tk()
+root = tk.Tk()
 
-e = Entry(root, width=50)
-e.pack()
+e = tk.Entry(root, width=50)
+e.grid(row=1 , column=1)
 
 
 root.mainloop()

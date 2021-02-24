@@ -1,8 +1,8 @@
-from tkinter import *
+import tkinter as tk
 
-root = Tk()
+root = tk.Tk()
 
-mylable = Label(root, text='damet garm.')
+mylable = tk.Label(root, text='damet garm.')
 mylable.pack()
 
 root.mainloop()
