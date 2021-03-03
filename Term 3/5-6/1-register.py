@@ -1,8 +1,20 @@
 import tkinter as tk
+import tkinter.ttk as ttk
 import reg
 
 
 root = tk.Tk()
+
+def srch():
+    file = open('names.txt', 'r')
+    top = tk.TopLevel()
+    top.geometry(f'{root.winfo_width()}x{root.winfo_height()}')
+    text = tk.Text(top)
+    text.grid(row=0, column=0)
+    for l in file:
+        if search.get() in l:
+            text.insert(tk.INSERT, i)
+
 
 def register():
     reg.register(
@@ -48,8 +60,12 @@ b1.grid(row=4, column=0)
 b2= tk.Button(frame, text='cancle', command=root.destroy)
 b2.grid(row=4, column=1)
 
+ttk.Separator(root,orient=tk.HORIZONTAL).grid(row=5, column=0, columnspan=2, sticky='ew')
 
-
+tk.Label(root, text='Search').grid(row=6, column=0)
+search = tk.Entry(root)
+search.grid(row=6, column=1)
+tk.Button(root, text='Search',command=srch).grid(row=7, column=0, columnspan=2)
 
 
 root.mainloop()
