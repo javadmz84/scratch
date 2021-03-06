@@ -1,19 +1,20 @@
 import tkinter as tk
-import tkinter.ttk as ttk
 import reg
+import tkinter.ttk as ttk
+
 
 
 root = tk.Tk()
 
 def srch():
     file = open('names.txt', 'r')
-    top = tk.TopLevel()
+    top = tk.Toplevel()
     top.geometry(f'{root.winfo_width()}x{root.winfo_height()}')
     text = tk.Text(top)
     text.grid(row=0, column=0)
     for l in file:
         if search.get() in l:
-            text.insert(tk.INSERT, i)
+            text.insert(tk.INSERT, l)
 
 
 def register():
