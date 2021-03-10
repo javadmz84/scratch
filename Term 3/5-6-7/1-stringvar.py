@@ -6,6 +6,26 @@ import tkinter.ttk as ttk
 
 root = tk.Tk()
 
+def date(a,b,c):
+    if birth.get().isdigit():
+        if len(birth.get() == 8):
+            n = birth.get()
+            new = f'{n{0:4}}-{n{}}'
+
+
+def alphabet(a,b,c):
+    if name.get().isalpha():
+        e1.config(bg='green')
+    else:
+        el.config(bg='red')
+
+def alphabetl(a,b,c):
+    if last.get().isalpha():
+        e2.config(bg='green')
+    else:
+        e2.config(bg='red')
+
+
 def callback(a,b,c):
     c = code.get()
     e4.config(bg='red')
@@ -14,7 +34,7 @@ def callback(a,b,c):
             e4.config(bg='green')
         elif len(c) > 10:
             code.set(c[:10])
-            e4
+            e4.config(bg='green')
     elif len(c) > 10:
         code.set(c[:10])
 
@@ -54,14 +74,20 @@ l4.grid(row=3 , column=0)
 
 
 name = tk.StringVar()
+name.trace('w', alphabet)
+
 e1 = tk.Entry(root, textvariable=name)
 e1.grid(row=0, column=1)
 
 last = tk.StringVar()
+last.trace('w', alphabetl)
+
 e2 = tk.Entry(root, textvariable=last)
 e2.grid(row=1, column=1 )
 
 birth = tk.StringVar()
+birth.trace('w', date)
+
 e3 = tk.Entry(root, textvariable=birth)
 e3.grid(row=2, column=1 )
 
