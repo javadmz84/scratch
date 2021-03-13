@@ -1,29 +1,26 @@
+from tkcalendar import DateEntry
 import tkinter as tk
 import reg
 import tkinter.ttk as ttk
 
 
 
-root = tk.Tk()
 
-def date(a,b,c):
-    if birth.get().isdigit():
-        if len(birth.get() == 8):
-            n = birth.get()
-            new = f'{n{0:4}}-{n{}}'
+
 
 
 def alphabet(a,b,c):
     if name.get().isalpha():
         e1.config(bg='green')
     else:
-        el.config(bg='red')
+        e1.config(bg='red')
 
 def alphabetl(a,b,c):
     if last.get().isalpha():
         e2.config(bg='green')
     else:
         e2.config(bg='red')
+        
 
 
 def callback(a,b,c):
@@ -49,15 +46,22 @@ def srch():
             text.insert(tk.INSERT, l)
 
 
-def register():
+def register(a=None):
     reg.register(
         name.get(),
         last.get(),
-        birth.get(),
+        e3.get(),
         code.get(),
     )
+    name.set('')
+    last.set('')
+    code.set('')
+    e1.config(bg='white')
+    e2.config(bg='white')
+    e4.config(bg='white')
 
-
+root = tk.Tk()
+root.bind('<Return>', register)
 
 l1 = tk.Label(root, text='Name')
 l1.grid(row=0 , column=0)
@@ -85,11 +89,12 @@ last.trace('w', alphabetl)
 e2 = tk.Entry(root, textvariable=last)
 e2.grid(row=1, column=1 )
 
-birth = tk.StringVar()
-birth.trace('w', date)
 
-e3 = tk.Entry(root, textvariable=birth)
-e3.grid(row=2, column=1 )
+
+
+e3 = DateEntry(root, width=12, background='darkblue', foreground='white',
+    borderwidth=2, date_pattern='y-mm-dd')
+e3.grid(row=2, column=1, sticky='we' )
 
 code = tk.StringVar()
 code.trace('w', callback)
@@ -101,11 +106,9 @@ frame = tk.Frame()
 frame.grid(row=4, column=0, columnspan=2)
 
 
-b1= tk.Button(frame, text='regester', command=register)
-b1.grid(row=4, column=0)
+tk.Button(frame, text='regester', command=register).grid(row=4, column=0)
 
-b2= tk.Button(frame, text='cancle', command=root.destroy)
-b2.grid(row=4, column=1)
+tk.Button(frame, text='cancle', command=root.destroy).grid(row=4, column=1)
 
 ttk.Separator(root,orient=tk.HORIZONTAL).grid(row=5, column=0, columnspan=2, sticky='ew')
 
