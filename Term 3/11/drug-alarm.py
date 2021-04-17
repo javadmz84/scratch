@@ -1,10 +1,11 @@
-import tkinter as tk 
+import tkinter as tk  
 import tkinter.ttk as ttk
 
 
 root = tk.Tk()
 note = ttk.Notebook(root)
 note.grid(row=0, column=0)
+
 
 patients = ttk.Frame(note)
 note.add(patients, text='Patients')
@@ -83,8 +84,31 @@ tk.Label(timers, textvariable=p1).grid(row=0, column=0, padx=10, pady=10)
 p2 = tk.StringVar()
 p2.set('Patient2')
 tk.Label(timers, textvariable=p2).grid(row=0, column=1,  pady=10)
-
 p3 = tk.StringVar()
 p3.set('Patient3')
-tk.Label(timers, textvariable=p3).grid(row=0, column=3, padx=10, pady=10)
+tk.Label(timers, textvariable=p3).grid(row=0, column=2, padx=10, pady=10)
+
+##############The Second Row Of Timers#############
+t1 = tk.StringVar()
+t1.set('00:00:00')
+tk.Label(timers, textvariable=t1).grid(row=1, column=0)
+
+t2 = tk.StringVar()
+t2.set('00:00:00')
+tk.Label(timers, textvariable=t2).grid(row=1, column=1)
+
+t3 = tk.StringVar()
+t3.set('00:00:00')
+tk.Label(timers, textvariable=t3).grid(row=1, column=2)
+
+###############The Third Row Of Timers##############
+b1 = tk.Button(timers, text='Start')
+b1.grid(row=2, column=0)
+
+b2 = tk.Button(timers, text='Start')
+b2.grid(row=2, column=1)
+
+b3 = tk.Button(timers, text='Start')
+b3.grid(row=2, column=2)
+
 root.mainloop()
