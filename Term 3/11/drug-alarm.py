@@ -2,6 +2,24 @@ import tkinter as tk
 import tkinter.ttk as ttk
 
 
+###############functions#################
+def callback1(a,b,c):
+    p1.set(name1.get())
+
+def callback2(a,b,c):
+    p2.set(name2.get())
+
+def callback3(a,b,c):
+    p3.set(name3.get())
+
+def time_format(seconds):
+    h = int(seconds/3600)
+    tem = h%3600
+    m = int(tem/60)
+    s = m%60
+    return '%02d:%02d:%02d'(h, m, s)
+        
+
 root = tk.Tk()
 note = ttk.Notebook(root)
 note.grid(row=0, column=0)
@@ -19,7 +37,7 @@ tk.Label(lf1, text='Name').grid(row=0, column=0)
 tk.Label(lf1, text='Time').grid(row=1, column=0)
 name1 = tk.StringVar()
 time1 = tk.StringVar()
-
+name1.trace('w',callback1)
 tk.Entry(lf1, textvariable=name1).grid(row=0, column=1)
 ##################Timer 1###############
 f1 = tk.Frame(lf1)
@@ -41,7 +59,7 @@ tk.Label(lf2, text='Name').grid(row=0, column=0)
 tk.Label(lf2, text='Time').grid(row=1, column=0)
 name2 = tk.StringVar()
 time2 = tk.StringVar()
-
+name2.trace('w', callback2)
 tk.Entry(lf2, textvariable=name2).grid(row=0, column=1)
 ##################Timer 2####################
 f2 = tk.Frame(lf2)
@@ -62,8 +80,9 @@ tk.Label(lf3, text='Name').grid(row=0, column=0)
 tk.Label(lf3, text='Time').grid(row=1, column=0)
 name3 = tk.StringVar()
 time3 = tk.StringVar()
-###################
+name3.trace('w', callback3)
 tk.Entry(lf3, textvariable=name3).grid(row=0, column=1)
+#######
 f3 = tk.Frame(lf3)
 f3.grid(row=1, column=1)
 h_p_3 = tk.StringVar()
@@ -110,5 +129,7 @@ b2.grid(row=2, column=1)
 
 b3 = tk.Button(timers, text='Start')
 b3.grid(row=2, column=2)
-
+#############the forth row of timer#############
+tk.Button(timers, text='Cancel', command=root.destroy).grid(row=3, column=0, sticky=tk.E+tk.w, columnspan=3)
+##################3
 root.mainloop()
