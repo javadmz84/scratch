@@ -17,8 +17,25 @@ def time_format(seconds):
     tem = h%3600
     m = int(tem/60)
     s = m%60
-    return '%02d:%02d:%02d'(h, m, s)
+    return '%02d:%02d:%02d'%h, m, s
         
+
+def callback_t_1():
+    t1.set('%02d:%02d:%02d',int(h_p_l.get()),int(m_p_l.get()), int(s_p_l.get()))
+
+def callback_t_1():
+    t2.set('%02d:%02d:%02d',int(h_p_2.get()),int(m_p_2.get()), int(s_p_2.get()))
+
+def callback_t_1():
+    t3.set('%02d:%02d:%02d',int(h_p_3.get()),int(m_p_3.get()), int(s_p_3.get()))
+
+def counter(second, var, button):
+    button.config(state=DISABLED)
+    while seconds:
+        sleep(1)
+        seconds -= 1
+        var.set(time_format(seconds))
+    button.config(state=ACTIVE)
 
 root = tk.Tk()
 note = ttk.Notebook(root)
@@ -130,6 +147,21 @@ b2.grid(row=2, column=1)
 b3 = tk.Button(timers, text='Start')
 b3.grid(row=2, column=2)
 #############the forth row of timer#############
-tk.Button(timers, text='Cancel', command=root.destroy).grid(row=3, column=0, sticky=tk.E+tk.w, columnspan=3)
+tk.Button(timers, text='Cancel', command=root.destroy).grid(row=3, column=0, sticky=tk.E+tk.W, columnspan=3)
 ##################3
+h_p_l.trace('w', callback_t_1)
+m_p_l.trace('w', callback_t_2)
+s_p_l.trace('w', callback_t_3)
+h_p_2.trace('w', callback_t_1)
+m_p_2.trace('w', callback_t_2)
+s_p_2.trace('w', callback_t_3)
+h_p_3.trace('w', callback_t_1)
+m_p_3.trace('w', callback_t_2)
+s_p_3.trace('w', callback_t_3)
+
+
+
+
+
+
 root.mainloop()
