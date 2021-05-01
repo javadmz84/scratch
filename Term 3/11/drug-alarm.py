@@ -1,6 +1,7 @@
 import tkinter as tk  
 import tkinter.ttk as ttk
-
+from tkinter.constants import ACTIVE, DISABLED
+from time import sleep
 
 ###############functions#################
 def callback1(a,b,c):
@@ -17,17 +18,26 @@ def time_format(seconds):
     tem = h%3600
     m = int(tem/60)
     s = m%60
-    return '%02d:%02d:%02d'%h, m, s
+    return '%02d:%02d:%02d'%(h, m, s)
         
 
-def callback_t_1():
-    t1.set('%02d:%02d:%02d',int(h_p_l.get()),int(m_p_l.get()), int(s_p_l.get()))
+def callback_t_1(a,b,c):
+    h1 = int(h_p_1.get())
+    m1 = int(m_p_1.get())
+    s1 = int(s_p_1.get())
+    t1.set('%02d:%02d:%02d'%(h1, m1, s1))
 
-def callback_t_1():
-    t2.set('%02d:%02d:%02d',int(h_p_2.get()),int(m_p_2.get()), int(s_p_2.get()))
+def callback_t_2(a,b,c):
+    h2 = int(h_p_2.get())
+    m2 = int(m_p_2.get())
+    s2 = int(s_p_2.get())
+    t2.set('%02d:%02d:%02d'%(h2, m2, s2))
 
-def callback_t_1():
-    t3.set('%02d:%02d:%02d',int(h_p_3.get()),int(m_p_3.get()), int(s_p_3.get()))
+def callback_t_3(a,b,c):
+    h3 = int(h_p_3.get())
+    m3 = int(m_p_3.get())
+    s3 = int(s_p_3.get())
+    t3.set('%02d:%02d:%02d'%(h3, m3, s3))
 
 def counter(second, var, button):
     button.config(state=DISABLED)
@@ -150,13 +160,13 @@ b3.grid(row=2, column=2)
 tk.Button(timers, text='Cancel', command=root.destroy).grid(row=3, column=0, sticky=tk.E+tk.W, columnspan=3)
 ##################3
 h_p_l.trace('w', callback_t_1)
-m_p_l.trace('w', callback_t_2)
-s_p_l.trace('w', callback_t_3)
-h_p_2.trace('w', callback_t_1)
+m_p_l.trace('w', callback_t_1)
+s_p_l.trace('w', callback_t_1)
+h_p_2.trace('w', callback_t_2)
 m_p_2.trace('w', callback_t_2)
-s_p_2.trace('w', callback_t_3)
-h_p_3.trace('w', callback_t_1)
-m_p_3.trace('w', callback_t_2)
+s_p_2.trace('w', callback_t_2)
+h_p_3.trace('w', callback_t_3)
+m_p_3.trace('w', callback_t_3)
 s_p_3.trace('w', callback_t_3)
 
 
