@@ -47,6 +47,13 @@ def counter(second, var, button):
         var.set(time_format(seconds))
     button.config(state=ACTIVE)
 
+def start(number):
+    if number ==1:
+        seconds1 = int(h_p_l.get())*3600 + int(m_p_l.get())*60 + int(s_p_l.get())
+        th1 =Thread(target=counter, args=(seconds1,t1,b1))
+        th1.start()
+    elif number == 2:
+
 root = tk.Tk()
 note = ttk.Notebook(root)
 note.grid(row=0, column=0)
