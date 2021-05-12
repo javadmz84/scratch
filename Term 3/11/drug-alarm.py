@@ -1,18 +1,17 @@
 import tkinter as tk  
 import tkinter.ttk as ttk
-from tkinter.constants import ACTIVE, DISABLED
 from time import sleep
-
+from threading import Thread
 ###############functions#################
 def callback1(a,b,c):
-    p1.set(name1.get())
+    n_1.set(name1.get())
 
 def callback2(a,b,c):
-    p2.set(name2.get())
+    n_2.set(name2.get())
 
 def callback3(a,b,c):
-    p3.set(name3.get())
-
+    n_3.set(name3.get())
+######################
 def time_format(seconds):
     h = int(seconds/3600)
     tem = h%3600
@@ -40,20 +39,27 @@ def callback_t_3(a,b,c):
     t3.set('%02d:%02d:%02d'%(h3, m3, s3))
 
 def counter(second, var, button):
-    button.config(state=DISABLED)
+    button.config(state=tk.DISABLED)
     while seconds:
         sleep(1)
         seconds -= 1
         var.set(time_format(seconds))
-    button.config(state=ACTIVE)
+    button.config(state=tk.ACTIVE)
 
 def start(number):
     if number ==1:
         seconds1 = int(h_p_l.get())*3600 + int(m_p_l.get())*60 + int(s_p_l.get())
-        th1 =Thread(target=counter, args=(seconds1,t1,b1))
+        th1 =Thread(target=counter, args=(seconds1,t_1,b1))
         th1.start()
     elif number == 2:
-
+        seconds2 = int(h_p_2.get())*3600 + int(m_p_2.get())*60 + int(s_p_2.get())
+        th2 =Thread(target=counter, args=(seconds1,t_2,b2))
+        th2.start()
+    else:
+        seconds3 = int(h_p_3.get())*3600 + int(m_p_3.get())*60 + int(s_p_3.get())
+        th3 = Thread(target=counter, args=(seconds3, t+3, b3))
+        th3.start()
+############################################        
 root = tk.Tk()
 note = ttk.Notebook(root)
 note.grid(row=0, column=0)
@@ -155,23 +161,25 @@ t3.set('00:00:00')
 tk.Label(timers, textvariable=t3).grid(row=1, column=2)
 
 ###############The Third Row Of Timers##############
-b1 = tk.Button(timers, text='Start')
+b1 = tk.Button(timers, text='Start', command= lambda: start(1))
 b1.grid(row=2, column=0)
 
-b2 = tk.Button(timers, text='Start')
+b2 = tk.Button(timers, text='Start', command= lambda: start(2))
 b2.grid(row=2, column=1)
 
-b3 = tk.Button(timers, text='Start')
+b3 = tk.Button(timers, text='Start', command= lambda: start(3))
 b3.grid(row=2, column=2)
 #############the forth row of timer#############
-tk.Button(timers, text='Cancel', command=root.destroy).grid(row=3, column=0, sticky=tk.E+tk.W, columnspan=3)
+tk.Button(timers, text='Cancel', command=root.destroy).grid(row=3, column=0, sticky='we' , columnspan=4)
 ##################3
 h_p_l.trace('w', callback_t_1)
 m_p_l.trace('w', callback_t_1)
 s_p_l.trace('w', callback_t_1)
+
 h_p_2.trace('w', callback_t_2)
 m_p_2.trace('w', callback_t_2)
 s_p_2.trace('w', callback_t_2)
+
 h_p_3.trace('w', callback_t_3)
 m_p_3.trace('w', callback_t_3)
 s_p_3.trace('w', callback_t_3)
