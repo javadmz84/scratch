@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from time import sleep
 from threading import Thread
-
+from conf import *
 ##################################def trace
 def callback1(a, b, c):
     n_1.set(name1.get())
@@ -66,6 +66,15 @@ def start(number):
 #########################################
 root = tk.Tk()
 
+style = ttk.Style()
+
+style.theme_create('yummy', parent='alt', settings={
+        'TNotebook.Tab': {
+            'configure': {'foreground': 'blue'}
+            }
+    }
+)
+style.theme_use('yummy')
 note = ttk.Notebook(root)
 note.grid(row=0, column=0)
 
@@ -181,13 +190,13 @@ t_3 = tk.StringVar()
 t_3.set('00:00:00')
 tk.Label(timers, textvariable=t_3).grid(row=1, column=2)
 ######################################################## The third row of timer
-b1 = tk.Button(timers, text='Start', command= lambda: start(1))
+b1 = tk.Button(timers, cnf=dic_start, text='Start', command= lambda: start(1))
 b1.grid(row=2, column=0)
 
-b2 = tk.Button(timers, text='Start', command= lambda: start(2))
+b2 = tk.Button(timers,cnf=dic_start, text='Start', command= lambda: start(2))
 b2.grid(row=2, column=1)
 
-b3 = tk.Button(timers, text='Start', command= lambda: start(3))
+b3 = tk.Button(timers,cnf=dic_start, text='Start', command= lambda: start(3))
 b3.grid(row=2, column=2)
 ######################################################## The forth row of timer
 tk.Button(timers, text='Cancel', command=root.destroy).grid(row=3, column=0, columnspan=3)
