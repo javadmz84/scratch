@@ -27,7 +27,7 @@ spin_cnf = {
     'to':9,
     'wrap':True,
     'width':5,
-    'font':('times', 20)
+    'font':('times',1)
 }
 label = tk.Label(root, text='', font=('times', 20))
 label.pack()
