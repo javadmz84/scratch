@@ -20,11 +20,20 @@ class Car:
         if mileage2>0:
             self.odometer_reading +=mileage2
 
-my_new_car = Car('audi', 'a4', 2019)
+    def fill_gas_tank(self):
+        print('It takes 2 minutes to fill gas tank')
+#my_new_car = Car('audi', 'a4', 2019)
 
-my_new_car.odometer_reading=15
-my_new_car.model='Q3'
-my_new_car.year=2020
-print(my_new_car.get_descriptive_name())
-my_new_car.increment_odometer(-400)
-my_new_car.read_odometer()
+#my_new_car.odometer_reading=15
+#my_new_car.model='Q3'
+#my_new_car.year=2020
+#print(my_new_car.get_descriptive_name())
+#my_new_car.increment_odometer(-400)
+#my_new_car.read_odometer()
+
+
+class Battery:
+    def __init__(self, battery_size):
+        self.battery_size = battery_size
+
+    def describe_battery
