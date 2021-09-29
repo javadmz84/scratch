@@ -13,5 +13,5 @@ class Fish:
 my_fish = Fish()
 
 my_fish.__size = 'small'
-# mu_fish.set_size('small')
+# my_fish.set_size('small')
 my_fish.get_size()

@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 class Aminity(ABC):
     def turn_on(self):
-        print
+        pass
 
 class Electricity(Aminity):
     def turn_on(self):
