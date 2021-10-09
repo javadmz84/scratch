@@ -25,7 +25,21 @@ def update():
     except:
         print('Access Denied')
 
-        
+def delete(p_id=None):
+    p_id = int(var3.get())
+    con = pymysql.connect(host='localhost', user='root', password='JaVaDmZ84!', database='contacts')
+    if p_id is None:
+        sql = 'delete * from person'
+        try:
+            with con.cursor() as cur:
+                cur.execute(sql)
+        except:
+            print('Access Denied')
+    else:
+        sql = 'delete '
+
+
+
 root = tk.Tk()
 root.geometry('400x200')
 tk.Label(root, text="Name").grid(row=0, column=0)
