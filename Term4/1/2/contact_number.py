@@ -25,9 +25,28 @@ def update():
     except:
         print('Access Denied')
 
-def delete(p_id=None):
+def select():
     p_id = int(var3.get())
     con = pymysql.connect(host='localhost', user='root', password='JaVaDmZ84!', database='contacts')
+    sql = f"SELECT * FROM person WHERE id = {p_id}"
+    try:
+        with con.cursor()as cur:
+            cur.execute(sql)
+            print(cur.fetchall())
+    except:
+        print("Access Denied")
+
+
+def delete():
+    p_id = int(var3.get())
+    con = pymysql.connect(host='localhost', user='root', password='JaVaDmZ84!', database='contacts')
+    sql = f"DELETE FROM person WHERE id={p_id}"
+    try:
+        with con.cursor()as cur:
+            cur.execute(sql)
+            con.commit()
+    except:
+        print("Access Denied")
     if p_id is None:
         sql = 'delete * from person'
         try:
@@ -55,6 +74,6 @@ tk.Entry(root, textvariable=var3).grid(row=2, column=1)
 
 tk.Button(root, text="Add", command=add).grid(row=3, column=0, sticky='we')
 tk.Button(root, text="Update", command=update).grid(row=3, column=1, sticky='we')
-tk.Button(root, text="Select").grid(row=3, column=2, sticky='we')
-tk.Button(root, text="Delete").grid(row=3, column=3, sticky='we')
+tk.Button(root, text="Select", command=select).grid(row=3, column=2, sticky='we')
+tk.Button(root, text="Delete", command=delete).grid(row=3, column=3, sticky='we')
 root.mainloop()
