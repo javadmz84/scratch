@@ -14,3 +14,4 @@ emp = db.Table(
     db.Column('last_name', db.String(255), nullable=False)
 )
 metadata.create_all(engine)
+
