@@ -6,7 +6,7 @@ engine = db.create_engine('mysql+pymysql://root:JaVaDmZ84!@localhost:3306/orm_db
 connection = engine.connect()
 metadata = db.MetaData()
 
-data = db.Table('person', metadata, autoload=True, autoload_with=engine)
 
-query = db.insert(data).values(name='Javad', last_name='Momenzadeh')
+data = db.Table('person', metadata, autoload=True, autoload_with=engine)
+query = db.update(data).values(last_name='Momenzadeh').where(data.c.id==1)
 ResultProxy = connection.execute(query)

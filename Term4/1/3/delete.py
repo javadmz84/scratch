@@ -8,5 +8,5 @@ metadata = db.MetaData()
 
 data = db.Table('person', metadata, autoload=True, autoload_with=engine)
 
-query = db.insert(data).values(name='Javad', last_name='Momenzadeh')
+query = db.delete(data).where(data.c.id==1)
 ResultProxy = connection.execute(query)
