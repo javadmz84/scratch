@@ -1,7 +1,7 @@
 import sqlalchemy as db
 
 
-engine = db.create_engine('mysql+pymysql://root:JaVaDmZ84!@localhost:3306/orm_db1')
+engine = db.create_engine('mysql+pymysql://root:JaVaDmZ84!@localhost:3306/identity')
 
 connection = engine.connect()
 metadata = db.MetaData()
