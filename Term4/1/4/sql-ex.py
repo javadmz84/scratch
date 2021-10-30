@@ -13,11 +13,11 @@ def search():
         query = db.update(data).values(
             fullname=search_fullname.get(),
             phone=search_phone.get(),
-            ).where(data.c.idnum==res[1])
+            ).where(data.c.idnum==res[0])
         connection.execute(query)
 
     def delete():
-        query = db.delete(data).where(data.c.idnum ==res[1])
+        query = db.delete(data).where(data.c.idnum ==res[0])
         connection.execute(query)
     top = tk.Toplevel()
     tk.Label(top, text='Full Name:').grid(row=0, column=0)
