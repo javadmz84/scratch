@@ -14,9 +14,9 @@ def item_selected(event):
 
 def tree_view_passenger_update():
     tree_view_passengers.delete(*tree_view_passengers.get_children())
-
+    passengers = []
     for row in functions.passengers_list():
-        passengers.append(row)
+        passengers.append((f'{row[0]}', f'{row[1]}', f'{row[2]}'))
 
     for passenger in passengers:
         tree_view_passengers.insert('', tk.END, values=passenger)
@@ -32,6 +32,8 @@ def register_passnger():
     )
     person_fullname_register.set(''),
     person_id_number_register.set('')
+    tree_view_passenger_update()
+
 ############################ Main Frames
 root = tk.Tk()
 left_frame = tk.Frame(root)
@@ -45,7 +47,7 @@ register_notebook = ttk.Notebook(left_frame)
 tab_register_person = ttk.Frame(register_notebook)
 tab_set_flight = ttk.Frame(register_notebook)
 tab_book_ticket = ttk.Frame(register_notebook)
-register_notebook.add(tab_register_person, text='Flight')
+register_notebook.add(tab_register_person, text='Passnger')
 register_notebook.add(tab_set_flight, text='Flight')
 register_notebook.add(tab_book_ticket, text='ticket')
 register_notebook.grid(row=0, column=0)
@@ -66,7 +68,6 @@ person_fullname_register = tk.StringVar()
 tk.Entry(tab_register_person, textvariable=person_fullname_register).grid(row=0, column=1)
 tk.Label(tab_register_person, text='ID Number').grid(row=1, column=0)
 person_id_number_register = tk.StringVar()
-
 person_fullname_register = tk.StringVar()
 tk.Entry(tab_register_person, textvariable=person_fullname_register).grid(row=0, column=1)
 tk.Label(tab_register_person, text='ID Number').grid(row=1, column=0)
@@ -79,7 +80,7 @@ person_id_number_search = tk.StringVar()
 tk.Entry(passengers, textvariable=person_id_number_search).grid(row=0, column=1)
 tk.Button(passengers, text='Passengers   List', command=tree_view_passenger_update).grid(row=0, column=2)
 
-columns = ('#1', '#2', '#4')
+columns = ('#1', '#2', '#3')
 tree_view_passengers = ttk.Treeview(passengers, columns=columns, show='headings')
 tree_view_passengers.heading('#1', tex='PSG ID')
 tree_view_passengers.column('#1', anchor=tk.CENTER, stretch=tk.NO, width=60)
@@ -91,6 +92,6 @@ tree_view_passengers.grid(row=1, column=0, columnspan=3, sticky='nsew')
 scrollbar = ttk.Scrollbar(passengers,orient=tk.VERTICAL, command=tree_view_passengers.yview)
 tree_view_passengers.configure(yscroll=scrollbar.set)
 scrollbar.grid(row=1, column=3, sticky='ns')
-tree_view_passengers_update()
+tree_view_passenger_update()
 
 root.mainloop()
