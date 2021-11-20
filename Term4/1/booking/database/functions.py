@@ -50,11 +50,15 @@ def update_ticket(p_id, f_id, ticket_id):
     ).where(ticket.c.id == ticket_id)
     connection.execute(query)
 
-def passengers_list():
+def passenger_list():
     query = db.select(person)
-    result = connection.execute(query)
-    for row in result:
-        print(row)
+    return connection.execute(query)
+
+
+def passenger_filter(value):
+    txt = value+'%'
+    query = db.select(person).where(person.c.id_number.like(txt))
+    return connection.execute(query)
         
 engine = db.create_engine('mysql+pymysql://root:JaVaDmZ84!@localhost:3306/booking')
 

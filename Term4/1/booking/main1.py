@@ -2,9 +2,13 @@ import tkinter as tk
 import tkinter.ttk as ttk
 from tkinter.messagebox import showinfo
 
-from sqlalchemy.sql.expression import column
-
+from sqlalchemy.sql.expression import false, true
 from database import functions
+
+
+def passenger_search(a,b,c):
+    tree_view_passenger_update(filter=True)
+
 
 def item_selected(event):
     for selected_item in tree_view_passengers.selection():
@@ -12,17 +16,19 @@ def item_selected(event):
         record = item['values']
         showinfo(title='Information', message=record)
 
-def tree_view_passenger_update():
+def tree_view_passenger_update(filter=False):
     tree_view_passengers.delete(*tree_view_passengers.get_children())
     passengers = []
-    for row in functions.passengers_list():
+    if not filter:
+        l = functions.passenger_list()
+    else:
+        l = functions.passenger_filter(person_id_number_search.get())
+    for row in l:
         passengers.append((f'{row[0]}', f'{row[1]}', f'{row[2]}'))
 
     for passenger in passengers:
         tree_view_passengers.insert('', tk.END, values=passenger)
 
-def search_passnger():
-    pass
 
 
 def register_passnger():
@@ -77,6 +83,7 @@ tk.Button(tab_register_person, text='Register', command=register_passnger).grid(
 ################  Passenger List
 tk.Label(passengers, text='Query').grid(row=0, column=0)
 person_id_number_search = tk.StringVar()
+person_id_number_search.trace('w', passenger_search)
 tk.Entry(passengers, textvariable=person_id_number_search).grid(row=0, column=1)
 tk.Button(passengers, text='Passengers   List', command=tree_view_passenger_update).grid(row=0, column=2)
 
@@ -87,7 +94,7 @@ tree_view_passengers.column('#1', anchor=tk.CENTER, stretch=tk.NO, width=60)
 tree_view_passengers.heading('#2', text='FullName')
 tree_view_passengers.heading('#3', text='ID Number')
 tree_view_passengers.column('#3', anchor=tk.CENTER, stretch=tk.NO)
-tree_view_passengers.bind('<<TrreviewSelect>>', item_selected)
+tree_view_passengers.bind("<<TreeviewSelect>>", item_selected)
 tree_view_passengers.grid(row=1, column=0, columnspan=3, sticky='nsew')
 scrollbar = ttk.Scrollbar(passengers,orient=tk.VERTICAL, command=tree_view_passengers.yview)
 tree_view_passengers.configure(yscroll=scrollbar.set)
