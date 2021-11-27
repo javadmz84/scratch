@@ -1,10 +1,31 @@
 import tkinter as tk
+from tkinter import messagebox
 import tkinter.ttk as ttk
 from tkinter.messagebox import showinfo
-
-from sqlalchemy.sql.expression import false, true
 from database import functions
 
+def back():
+    destroy_all()
+    root.deiconify()
+    tree_view_passenger_update()
+
+
+def destroy_all():
+    for widget in root.winfo_children():
+        if isinstance(widget, tk.Toplevel):
+            widget.destroy()
+
+
+def update_passenger(id, fullname, idnumber):
+    functions.update_person(fullname, idnumber, id)
+    back()
+
+
+def delete_passenger(id):
+    answer = tk.messagebox.askyesno(title='Warning', message='Are you sure?')
+    if answer:
+        functions.delete_person(id)
+    back()
 
 def passenger_search(a,b,c):
     tree_view_passenger_update(filter=True)
@@ -14,7 +35,34 @@ def item_selected(event):
     for selected_item in tree_view_passengers.selection():
         item = tree_view_passengers.item(selected_item)
         record = item['values']
-        showinfo(title='Information', message=record)
+    if record:
+        root.withdraw()
+        top = tk.Toplevel()
+        frame_update = tk.Frame(top)
+        frame_update.grid(row=0, column=0, padx=(5, 5), pady=(5, 5))
+
+        tk.Label(frame_update, text='ID').grid(row=0, column=0)
+        person_id_update = tk.StringVar()
+        person_id_update.set(record[0])
+        tk.Entry(frame_update, textvariable=person_id_update, state='readonly').grid(row=0, column=1)
+
+        tk.Label(frame_update, text='FullName').grid(row=1, column=0)
+        person_fullname_update = tk.StringVar()
+        person_fullname_update.set(record[1])
+        tk.Entry(frame_update, textvariable=person_fullname_update).grid(row=1, column=1)
+
+        tk.Label(frame_update, text='ID Number').grid(row=2, column=0)
+        person_id_number_update = tk.StringVar()
+        person_id_number_update.set(record[2])
+        tk.Entry(frame_update, textvariable=person_id_number_update).grid(row=2, column=1)
+
+        update = lambda : update_passenger(
+            record[0], person_fullname_update.get(), person_id_number_update.get()
+        )
+        delete = lambda : delete_passenger(record[0])
+
+        tk.Button(frame_update, text='Update', command=update).grid(row=2, column=0)
+        tk.Button(frame_update, text='Delete', command=delete).grid(row=3, column=0)
 
 def tree_view_passenger_update(filter=False):
     tree_view_passengers.delete(*tree_view_passengers.get_children())
@@ -68,24 +116,25 @@ right_notebook.add(flights, text='Flights')
 right_notebook.add(tickets, text='Tickets')
 right_notebook.grid(row=0, column=0)
 
-################ Register Passenger
+################ Left Register Passenger
 tk.Label(tab_register_person, text='Fullname').grid(row=0, column=0)
 person_fullname_register = tk.StringVar()
 tk.Entry(tab_register_person, textvariable=person_fullname_register).grid(row=0, column=1)
 tk.Label(tab_register_person, text='ID Number').grid(row=1, column=0)
-person_id_number_register = tk.StringVar()
 person_fullname_register = tk.StringVar()
 tk.Entry(tab_register_person, textvariable=person_fullname_register).grid(row=0, column=1)
+
 tk.Label(tab_register_person, text='ID Number').grid(row=1, column=0)
 person_id_number_register = tk.StringVar()
 tk.Entry(tab_register_person, textvariable=person_id_number_register).grid(row=1, column=1)
-tk.Button(tab_register_person, text='Register', command=register_passnger).grid(row=2, column=1)
+
+tk.Button(tab_register_person, text='Registor', command=register_passnger).grid(row=2, column=1)
 ################  Passenger List
 tk.Label(passengers, text='Query').grid(row=0, column=0)
 person_id_number_search = tk.StringVar()
 person_id_number_search.trace('w', passenger_search)
 tk.Entry(passengers, textvariable=person_id_number_search).grid(row=0, column=1)
-tk.Button(passengers, text='Passengers   List', command=tree_view_passenger_update).grid(row=0, column=2)
+# tk.Button(passengers, text='Passengers   List', command=tree_view_passenger_update).grid(row=0, column=2)
 
 columns = ('#1', '#2', '#3')
 tree_view_passengers = ttk.Treeview(passengers, columns=columns, show='headings')

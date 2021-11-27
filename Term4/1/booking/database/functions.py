@@ -6,7 +6,7 @@ def insert_person(fName, number):
     query = db.insert(person).values(fullname=fName.lower(), id_number=number)
     connection.execute(query)
 
-def set_fligh(fcity, tcity, d, a, ag, s, p):
+def set_flight(fcity, tcity, d, a, ag, s, p):
     query = db.insert(flight).values(
         from_city=fcity,
         to_city=tcity,
@@ -59,7 +59,11 @@ def passenger_filter(value):
     txt = value+'%'
     query = db.select(person).where(person.c.id_number.like(txt))
     return connection.execute(query)
-        
+
+def delete_person(person_id):
+    query = db.delete(person).where(person.c.id == person_id)
+    connection.execute(query)
+
 engine = db.create_engine('mysql+pymysql://root:JaVaDmZ84!@localhost:3306/booking')
 
 connection = engine.connect()
