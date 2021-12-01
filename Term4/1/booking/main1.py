@@ -1,8 +1,17 @@
+from ttkwidgets.autocomplete import AutocompleteCombobox
+from tkcalendar import DateEntry
+import pandas as pd
+import json
 import tkinter as tk
 from tkinter import messagebox
 import tkinter.ttk as ttk
 from tkinter.messagebox import showinfo
 from database import functions
+
+
+def read_air_ports(add):
+    df = pd.DataFrame(json.load(open(add, 'r')))
+    return df['iata'].to_list()
 
 def back():
     destroy_all()
@@ -141,7 +150,6 @@ tree_view_passengers = ttk.Treeview(passengers, columns=columns, show='headings'
 tree_view_passengers.heading('#1', tex='PSG ID')
 tree_view_passengers.column('#1', anchor=tk.CENTER, stretch=tk.NO, width=60)
 tree_view_passengers.heading('#2', text='FullName')
-tree_view_passengers.heading('#3', text='ID Number')
 tree_view_passengers.column('#3', anchor=tk.CENTER, stretch=tk.NO)
 tree_view_passengers.bind("<<TreeviewSelect>>", item_selected)
 tree_view_passengers.grid(row=1, column=0, columnspan=3, sticky='nsew')
@@ -149,5 +157,50 @@ scrollbar = ttk.Scrollbar(passengers,orient=tk.VERTICAL, command=tree_view_passe
 tree_view_passengers.configure(yscroll=scrollbar.set)
 scrollbar.grid(row=1, column=3, sticky='ns')
 tree_view_passenger_update()
+################################
+
+#################################
+airports = read_air_ports('airports.json')
+tk.Label(tab_set_flight, text="From").grid(row=0, column=0)
+flight_from_city_set = tk.StringVar()
+AutocompleteCombobox(
+    tab_set_flight,
+    textvariable=flight_from_city_set,
+    completevalues=airports).grid(row=0, column=1)
+
+tk.Label(tab_set_flight, text="To").grid(row=1, column=0)
+flight_to_city_set = tk.StringVar()
+AutocompleteCombobox(
+
+    tab_set_flight,
+    textvariable=flight_to_city_set,
+    completevalues=airports).grid(row=1, column=1)
+
+tk.Label(tab_set_flight, text="Depratur").grid(row=2, column=0)
+flight_depratur_set = tk.StringVar()
+DateEntry(tab_set_flight, textvariable=flight_depratur_set, year=2021).grid(row=2, column=1)
+
+tk.Label(tab_set_flight, text="Arrival").grid(row=3, column=0)
+flight_arrival_set = tk.StringVar()
+DateEntry(tab_set_flight, textvariable=flight_arrival_set, year=2021).grid(row=3, column=1)
+
+agencies = ['jafar', 'mahan', 'qehsm', 'iran-air']
+tk.Label(tab_set_flight, text="Agency").grid(row=4, column=0)
+flight_agency_set = tk.StringVar()
+AutocompleteCombobox(
+
+    tab_set_flight,
+    textvariable=flight_agency_set,
+    completevalues=agencies).grid(row=4, column=1)
+
+tk.Label(tab_set_flight, text="Seats").grid(row=5, column=0)
+flight_seats_set = tk.IntVar()
+tk.Entry(tab_set_flight, textvariable=flight_seats_set).grid(row=5, column=1)
+
+tk.Label(tab_set_flight, text="Price").grid(row=6, column=0)
+flight_price_set = tk.IntVar()
+tk.Entry(tab_set_flight, textvariable=flight_price_set).grid(row=6, column=1)
+
+tk.Button(tab_set_flight, text="Registor", command=register_passnger).grid(row=7, column=1)
 
 root.mainloop()

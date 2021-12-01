@@ -6,6 +6,10 @@ def insert_person(fName, number):
     query = db.insert(person).values(fullname=fName.lower(), id_number=number)
     connection.execute(query)
 
+def delete_person(person_id):
+    query = db.delete(person).where(person.c.id == person_id)
+    connection.execute(query)
+
 def set_flight(fcity, tcity, d, a, ag, s, p):
     query = db.insert(flight).values(
         from_city=fcity,
