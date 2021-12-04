@@ -9,8 +9,24 @@ from tkinter.messagebox import showinfo
 from database import functions
 
 
+def book_fligh():
+    functions.set_flight(
+        flight_from_city_set.get(()),
+        flight_to_city_set.get(),
+        flight_depratur_set.get(),
+        flight_arrival_set.get(),
+        flight_agency_set.get(),
+        flight_seats_set.get(),
+        flight_price_set.get(),
+    )
+    flight_from_city_set.set(""),
+    flight_to_city_set.set(""),
+    flight_agency_set.set(""),
+    flight_seats_set.set(0),
+    flight_price_set.set(0),
+
 def read_air_ports(add):
-    df = pd.DataFrame(json.load(open(add, 'r')))
+    df = pd.DataFrame(json.load(open(add, 'r', encoding='utf-8')))
     return df['iata'].to_list()
 
 def back():
@@ -178,11 +194,11 @@ AutocompleteCombobox(
 
 tk.Label(tab_set_flight, text="Depratur").grid(row=2, column=0)
 flight_depratur_set = tk.StringVar()
-DateEntry(tab_set_flight, textvariable=flight_depratur_set, year=2021).grid(row=2, column=1)
+DateEntry(tab_set_flight, date_pattern='y-mm-dd' ,textvariable=flight_depratur_set, year=2021).grid(row=2, column=1)
 
 tk.Label(tab_set_flight, text="Arrival").grid(row=3, column=0)
 flight_arrival_set = tk.StringVar()
-DateEntry(tab_set_flight, textvariable=flight_arrival_set, year=2021).grid(row=3, column=1)
+DateEntry(tab_set_flight, date_pattern='y-mm-dd', textvariable=flight_arrival_set, year=2021).grid(row=3, column=1)
 
 agencies = ['jafar', 'mahan', 'qehsm', 'iran-air']
 tk.Label(tab_set_flight, text="Agency").grid(row=4, column=0)
@@ -201,6 +217,6 @@ tk.Label(tab_set_flight, text="Price").grid(row=6, column=0)
 flight_price_set = tk.IntVar()
 tk.Entry(tab_set_flight, textvariable=flight_price_set).grid(row=6, column=1)
 
-tk.Button(tab_set_flight, text="Registor", command=register_passnger).grid(row=7, column=1)
+tk.Button(tab_set_flight, text="Registor", command=book_flight).grid(row=7, column=1)
 
 root.mainloop()
