@@ -8,10 +8,25 @@ import tkinter.ttk as ttk
 from tkinter.messagebox import showinfo
 from database import functions
 
+def flight_search(a,b,c):
+    treeview_flight_update(filter=True)
 
-def book_fligh():
+def treeview_flight_update(filter=False):
+    tree_view_flights.delete(*tree_view_flights.get_children())
+    flughts = []
+    if not filter:
+        l = functions.flight_list()
+    else:
+        l = functions.flight_filter(flight_id_search.get())
+    for row in l:
+        flughts.append((f"{row[0]}", f"{row[1]}", f"{row[2]}", f"{row[3]}", f"{row[4]}", f"{row[5]}", f"{row[6]}", f"{row[7]}" ))
+    for flight in flughts:
+        tree_view_flights.insert("", tk.END, values=flight)
+
+
+def book_flight():
     functions.set_flight(
-        flight_from_city_set.get(()),
+        flight_from_city_set.get(),
         flight_to_city_set.get(),
         flight_depratur_set.get(),
         flight_arrival_set.get(),
@@ -24,7 +39,7 @@ def book_fligh():
     flight_agency_set.set(""),
     flight_seats_set.set(0),
     flight_price_set.set(0),
-
+    treeview_flight_update()
 def read_air_ports(add):
     df = pd.DataFrame(json.load(open(add, 'r', encoding='utf-8')))
     return df['iata'].to_list()
@@ -219,4 +234,34 @@ tk.Entry(tab_set_flight, textvariable=flight_price_set).grid(row=6, column=1)
 
 tk.Button(tab_set_flight, text="Registor", command=book_flight).grid(row=7, column=1)
 
+######################flight list
+tk.Label(flights, text="Query").grid(row=0, column=0)
+flight_id_search = tk.StringVar()
+# flight_id_search.trace('w', passenger_search)
+tk.Entry(flights, textvariable=flight_id_search).grid(row=0, column=1)
+
+columns = ("#1", "#2", "#3", "#4", "#5", "#6", "#7", "#8")
+tree_view_flights = ttk.Treeview(flights, columns=columns, show="headings")
+tree_view_flights.heading("#1", text="FLT ID")
+tree_view_flights.column("#1", anchor=tk.CENTER, stretch=tk.NO, width=50)
+tree_view_flights.heading("#2", text="From")
+tree_view_flights.column("#2", anchor=tk.CENTER, stretch=tk.NO, width=50)
+tree_view_flights.heading("#3", text="To")
+tree_view_flights.column("#3", anchor=tk.CENTER, stretch=tk.NO, width=50)
+tree_view_flights.heading("#4", text="Dep")
+tree_view_flights.column("#4", anchor=tk.CENTER, stretch=tk.NO, width=100)
+tree_view_flights.heading("#5", text="Arr")
+tree_view_flights.column("#5", anchor=tk.CENTER, stretch=tk.NO, width=100)
+tree_view_flights.heading("#6", text="Age")
+tree_view_flights.column("#6", anchor=tk.CENTER, stretch=tk.NO, width=100)
+tree_view_flights.heading("#7", text="Tot")
+tree_view_flights.column("#7", anchor=tk.CENTER, stretch=tk.NO, width=50)
+tree_view_flights.heading("#8", text="$")
+tree_view_flights.column("#8", anchor=tk.CENTER, stretch=tk.NO, width=50)
+# tree_view_flights.bind("<<TreeviewSelect>>", item_selected)
+tree_view_flights.grid(row=1, column=0, columnspan=3, sticky="nsew")
+scrollbar = ttk.Scrollbar(flights, orient=tk.VERTICAL, command=tree_view_flights.yview)
+tree_view_flights.configure(yscroll=scrollbar.set)
+scrollbar.grid(row=1, column=3, sticky="ns")
+treeview_flight_update()
 root.mainloop()

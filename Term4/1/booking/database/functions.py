@@ -27,6 +27,12 @@ def bood_ticket(p_id, f_id):
     connection.execute(query)
 
 
+def flight_list():
+    query = db.select(flight)
+    return connection.execute(query)
+
+def flight_filter(value):
+    query = db.select(flight).where(flight.c.id == int(value))
 
 def update_person(fName, number, person_id):
     query = db.update(person).values(
