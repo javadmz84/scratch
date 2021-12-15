@@ -8,6 +8,18 @@ import tkinter.ttk as ttk
 from tkinter.messagebox import showinfo
 from database import functions
 
+def find_flight(a, b, c):
+    v = functions.find_flight(flight_ticket.get())
+    for f in v:
+        flight_ticket_label.set(f'{f[1]} {f[2]}')
+
+
+def find_passenger(a, b, v):
+    v = functions.find_passenger(passenger_ticket.get())
+    for p in v:
+        passenger_ticket_label.set(f'{p[1]} {p[2]}')
+
+
 def flight_search(a,b,c):
     treeview_flight_update(filter=True)
 
@@ -264,4 +276,23 @@ scrollbar = ttk.Scrollbar(flights, orient=tk.VERTICAL, command=tree_view_flights
 tree_view_flights.configure(yscroll=scrollbar.set)
 scrollbar.grid(row=1, column=3, sticky="ns")
 treeview_flight_update()
+
+###############################
+passenger_ticket_label = tk.StringVar()
+tk.Label(tab_book_ticket, textvariable=passenger_ticket_label).grid(row=0, column=0, columnspan=2)
+tk.Label(tab_book_ticket, text='Passenger').grid(row=1, column=0)
+passenger_ticket = tk.StringVar()
+passenger_ticket.trace('w', find_passenger)
+tk.Entry(tab_book_ticket, textvariable=passenger_ticket).grid(row=1, column=1)
+
+
+flight_ticket_label = tk.StringVar()
+tk.Label(tab_book_ticket, textvariable=flight_ticket_label).grid(row=2, column=0, columnspan=2)
+tk.Label(tab_book_ticket, text='Flight').grid(row=3, column=0)
+flight_ticket= tk.StringVar()
+flight_ticket.trace('w', find_flight)
+tk.Entry(tab_book_ticket, textvariable=flight_ticket).grid(row=3, column=1)
+
+
+
 root.mainloop()

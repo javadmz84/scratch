@@ -1,6 +1,14 @@
 import sqlalchemy as db
 from sqlalchemy.engine import result
 
+def find_passenger(value):
+    query = db.select(person).where(person.c.id == int(value))
+    return connection.execute(query)
+
+def find_flight(value):
+    query = db.select(flight).where(flight.c.id ==int(value))
+    return connection.execute(query)
+
 
 def insert_person(fName, number):
     query = db.insert(person).values(fullname=fName.lower(), id_number=number)
