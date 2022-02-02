@@ -293,6 +293,6 @@ flight_ticket= tk.StringVar()
 flight_ticket.trace('w', find_flight)
 tk.Entry(tab_book_ticket, textvariable=flight_ticket).grid(row=3, column=1)
 
-
+tk.Button(tab_book_ticket, text='Set Ticket').grid(row=4, column=0)
 
 root.mainloop()
